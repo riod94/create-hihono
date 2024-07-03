@@ -9,7 +9,7 @@
     "release": "np"
   },
   "bin": {
-    "hihono": "./index.ts"
+    "hihono": "index.ts"
   },
   "author": {
     "name": "Rio Dwi Prabowo",
