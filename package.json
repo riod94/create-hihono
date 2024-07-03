@@ -1,0 +1,44 @@
+{
+  "name": "create-hihono",
+  "version": "0.0.0",
+  "description": "CLI tool to create a new hihono project",
+  "module": "index.ts",
+  "type": "module",
+  "scripts": {
+    "bin": "bun ./index.ts",
+    "release": "np"
+  },
+  "bin": {
+    "hihono": "./index.ts"
+  },
+  "author": {
+    "name": "Rio Dwi Prabowo",
+    "email": "riyo.s94@gamil.com",
+    "url": "https://github.com/riod94"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "@hono/eslint-config": "^0.0.2",
+    "@inquirer/confirm": "^3.1.0",
+    "@inquirer/input": "^2.1.0",
+    "@types/bun": "latest",
+    "@types/node": "^18.11.18",
+    "@types/yargs-parser": "^21.0.0",
+    "chalk": "^5.3.0",
+    "download-git-repo": "^3.0.2",
+    "esbuild": "^0.16.17",
+    "eslint": "^8.55.0",
+    "execa": "^8.0.1",
+    "nanospinner": "^1.1.0",
+    "np": "^7.6.3",
+    "prettier": "^3.2.5",
+    "tiged": "^2.12.7",
+    "tsx": "^4.7.1",
+    "typescript": "^5.3.3",
+    "vitest": "^0.34.6",
+    "yargs-parser": "^21.1.1"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  }
+}
