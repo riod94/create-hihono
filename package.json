@@ -9,7 +9,7 @@
     "release": "np --yolo"
   },
   "bin": {
-    "hihono": "./index.ts"
+    "hihono": "index.ts"
   },
   "files": [
     "index.ts",
