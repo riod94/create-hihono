@@ -30915,7 +30915,7 @@ var cons = {
 
 // package.json
 var name = "create-hihono";
-var version = "0.1.3";
+var version = "0.2.1";
 
 // src/hooks/dependencies.ts
 import {exec} from "child_process";
