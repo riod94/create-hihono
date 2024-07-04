@@ -6,10 +6,10 @@
   "type": "module",
   "scripts": {
     "bin": "bun ./index.ts",
-    "release": "np"
+    "release": "np --yolo"
   },
   "bin": {
-    "hihono": "index.ts"
+    "hihono": "./index.ts"
   },
   "author": {
     "name": "Rio Dwi Prabowo",
