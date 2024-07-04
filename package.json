@@ -1,6 +1,6 @@
 {
   "name": "create-hihono",
-  "version": "0.2.4",
+  "version": "0.2.5",
   "description": "CLI tool to create a new hihono project",
   "scripts": {
     "bin": "bun ./index.ts",
