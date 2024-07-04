@@ -1,11 +1,11 @@
-#!/usr/bin/env bun
+#!/usr/bin/env node
 
 import path from 'path';
 import fs from 'fs';
-import { cons } from './constant';
-import { version, name } from '../package.json'
-import { registerInstallationHook } from './hooks/dependencies';
-import { afterCreateHook, projectDependenciesHook } from './hook';
+import { cons } from './src/constant';
+import { version, name } from './package.json'
+import { registerInstallationHook } from './src/hooks/dependencies';
+import { afterCreateHook, projectDependenciesHook } from './src/hook';
 import { createSpinner } from 'nanospinner'
 import yargsParser from 'yargs-parser';
 // @ts-ignore: no types
