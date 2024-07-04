@@ -21,7 +21,7 @@
     "url": "https://github.com/riod94"
   },
   "license": "MIT",
-  "devDependencies": {
+  "dependencies": {
     "@hono/eslint-config": "^0.0.2",
     "@inquirer/confirm": "^3.1.13",
     "@inquirer/input": "^2.2.0",

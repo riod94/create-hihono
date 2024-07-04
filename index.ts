@@ -1,15 +1,17 @@
 #!/usr/bin/env bun
 
-import chalk from 'chalk';
 import path from 'path';
 import fs from 'fs';
-import yargsParser from 'yargs-parser';
-import confirm from '@inquirer/confirm'
-import input from '@inquirer/input'
-import { createSpinner } from 'nanospinner'
 import { version, name } from './package.json'
 import { registerInstallationHook } from './hooks/dependencies';
 import { afterCreateHook, projectDependenciesHook } from './hook';
+import { createSpinner } from 'nanospinner'
+import chalk from 'chalk';
+import yargsParser from 'yargs-parser';
+// @ts-ignore: no types
+import confirm from '@inquirer/confirm'
+// @ts-ignore: no types
+import input from '@inquirer/input'
 // @ts-ignore: no types
 import download from 'download-git-repo';
 
