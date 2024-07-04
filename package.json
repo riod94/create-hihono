@@ -13,7 +13,8 @@
     "index.ts",
     "hook.ts",
     "hooks/dependencies.ts",
-    "hooks/after-create.ts"
+    "hooks/after-create.ts",
+    "node_modules"
   ],
   "author": {
     "name": "Rio Dwi Prabowo",
