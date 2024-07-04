@@ -11,6 +11,12 @@
   "bin": {
     "hihono": "./index.ts"
   },
+  "files": [
+    "index.ts",
+    "hook.ts",
+    "hooks/dependencies.ts",
+    "hooks/after-create.ts"
+  ],
   "author": {
     "name": "Rio Dwi Prabowo",
     "email": "riyo.s94@gamil.com",
