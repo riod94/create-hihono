@@ -2,11 +2,11 @@
 
 import path from 'path';
 import fs from 'fs';
-import { version, name } from './package.json'
+import { cons } from './constant';
+import { version, name } from '../package.json'
 import { registerInstallationHook } from './hooks/dependencies';
 import { afterCreateHook, projectDependenciesHook } from './hook';
 import { createSpinner } from 'nanospinner'
-import chalk from 'chalk';
 import yargsParser from 'yargs-parser';
 // @ts-ignore: no types
 import confirm from '@inquirer/confirm'
@@ -47,7 +47,7 @@ function mkdirp(dir: string) {
 }
 
 async function main() {
-    console.log(chalk.yellowBright(`${name} version ${version}`))
+    console.info(cons.yellow, `${name} version ${version}`)
 
     const args = yargsParser(process.argv.slice(2))
 
@@ -57,9 +57,7 @@ async function main() {
     let projectName = ''
     if (args._[0]) {
         target = args._[0].toString()
-        console.log(
-            `${chalk.bold(`${chalk.green('✔')} Using target directory`)} … ${target}`,
-        )
+        console.log(`${cons.bold, `${'✔'} Using target directory`} … ${target}`)
         projectName = path.basename(target)
     } else {
         const answer = await input({
@@ -83,7 +81,10 @@ async function main() {
                 default: false,
             })
             // if continue then delete the directory
-            if (!response) process.exit(1)
+            if (!response) {
+                console.warn(cons.red, 'Installation cancelled by user')
+                process.exit()
+            }
             fs.rmSync(target, { recursive: true, force: true })
         }
     } else {
@@ -141,8 +142,9 @@ async function main() {
         fs.writeFileSync(packageJsonPath, JSON.stringify(newPackageJson, null, 2))
     }
 
-    console.log(chalk.green('🎉 ' + chalk.bold('Copied project files')))
-    console.log(chalk.whiteBright('\n Get started with:'), chalk.yellow(chalk.bold(`\n cd ${target} && bun dev`)))
+    console.log(cons.green, `🎉 Copied project files`)
+    console.log(`\n Get started with:`)
+    console.log(cons.yellow, ` \n cd ${target} && bun dev`)
 }
 
 main()

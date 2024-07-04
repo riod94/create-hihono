@@ -3,17 +3,14 @@
   "version": "0.1.3",
   "description": "CLI tool to create a new hihono project",
   "scripts": {
-    "bin": "bun ./index.ts",
+    "bin": "bun ./bundle.ts",
     "release": "np --yolo"
   },
   "bin": {
-    "hihono": "index.ts"
+    "hihono": "bundle.ts"
   },
   "files": [
-    "index.ts",
-    "hook.ts",
-    "hooks/dependencies.ts",
-    "hooks/after-create.ts"
+    "bundle.ts"
   ],
   "author": {
     "name": "Rio Dwi Prabowo",

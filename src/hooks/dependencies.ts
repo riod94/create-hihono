@@ -1,12 +1,11 @@
 import { exec } from 'child_process'
 import { chdir, exit } from 'process'
+import { projectDependenciesHook } from '../hook'
 import confirm from '@inquirer/confirm'
-import chalk from 'chalk'
 import { execa } from 'execa'
 import { createSpinner } from 'nanospinner'
-import { projectDependenciesHook } from '../hook'
 
-type PackageManager = 'npm' | 'bun' | 'pnpm' | 'yarn'
+// type PackageManager = 'npm' | 'bun' | 'pnpm' | 'yarn'
 
 const knownPackageManagers: { [key: string]: string } = {
     npm: 'npm install',
@@ -16,7 +15,7 @@ const knownPackageManagers: { [key: string]: string } = {
 }
 
 const knownPackageManagerNames = Object.keys(knownPackageManagers)
-const currentPackageManager = getCurrentPackageManager()
+// const currentPackageManager = getCurrentPackageManager()
 
 // Deno and Netlify need no dependency installation step
 const excludeTemplate = ['deno', 'netlify']
@@ -76,10 +75,10 @@ const registerInstallationHook = (
         })
 
         if (procExit == 0) {
-            spinner.success({ text: chalk.blueBright('Dependencies installed') })
+            spinner.success({ text: `Dependencies installed`, mark: `✔` })
         } else {
             spinner.stop({
-                mark: chalk.red('×'),
+                mark: `×`,
                 text: 'Failed to install project dependencies',
             })
             exit(procExit)
@@ -89,15 +88,15 @@ const registerInstallationHook = (
     })
 }
 
-function getCurrentPackageManager(): PackageManager {
-    const agent = process.env.npm_config_user_agent || 'npm' // Types say it might be undefined, just being cautious;
+// function getCurrentPackageManager(): PackageManager {
+//     const agent = process.env.npm_config_user_agent || 'npm' // Types say it might be undefined, just being cautious;
 
-    if (agent.startsWith('bun')) return 'bun'
-    else if (agent.startsWith('pnpm')) return 'pnpm'
-    else if (agent.startsWith('yarn')) return 'yarn'
+//     if (agent.startsWith('bun')) return 'bun'
+//     else if (agent.startsWith('pnpm')) return 'pnpm'
+//     else if (agent.startsWith('yarn')) return 'yarn'
 
-    return 'npm'
-}
+//     return 'npm'
+// }
 
 function checkPackageManagerInstalled(packageManager: string) {
     return new Promise<boolean>((resolve) => {
