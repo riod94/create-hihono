@@ -1,6 +1,6 @@
 {
   "name": "create-hihono",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "CLI tool to create a new hihono project",
   "module": "index.ts",
   "type": "module",
