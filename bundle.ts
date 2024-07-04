@@ -57,7 +57,7 @@ var __require = ((x) => typeof require !== "undefined" ? require : typeof Proxy 
 // node_modules/yoctocolors-cjs/index.js
 var require_yoctocolors_cjs = __commonJS((exports, module) => {
   var tty = import.meta.require("tty");
-  var hasColors = tty?.WriteStream?.prototype?.hasColors?.() ?? false;
+  var hasColors = tty.WriteStream.prototype.hasColors();
   var format = (open, close) => {
     if (!hasColors) {
       return (input) => input;
@@ -4040,7 +4040,7 @@ var require_proto_list = __commonJS((exports, module) => {
   };
 });
 
-// node_modules/ini/ini.js
+// node_modules/config-chain/node_modules/ini/ini.js
 var require_ini = __commonJS((exports) => {
   var encode = function(obj, opt) {
     var children = [];
@@ -4051,7 +4051,7 @@ var require_ini = __commonJS((exports) => {
         whitespace: false
       };
     } else {
-      opt = opt || Object.create(null);
+      opt = opt || {};
       opt.whitespace = opt.whitespace === true;
     }
     var separator = opt.whitespace ? " = " : "=";
@@ -4087,7 +4087,7 @@ var require_ini = __commonJS((exports) => {
     });
   };
   var decode = function(str) {
-    var out = Object.create(null);
+    var out = {};
     var p = out;
     var section = null;
     var re = /^\[([^\]]*)\]$|^([^=]+)(=(.*))?$/i;
@@ -4101,10 +4101,10 @@ var require_ini = __commonJS((exports) => {
       if (match[1] !== undefined) {
         section = unsafe(match[1]);
         if (section === "__proto__") {
-          p = Object.create(null);
+          p = {};
           return;
         }
-        p = out[section] = out[section] || Object.create(null);
+        p = out[section] = out[section] || {};
         return;
       }
       var key2 = unsafe(match[2]);
@@ -4142,7 +4142,7 @@ var require_ini = __commonJS((exports) => {
         if (part === "__proto__")
           return;
         if (!p2[part] || typeof p2[part] !== "object")
-          p2[part] = Object.create(null);
+          p2[part] = {};
         p2 = p2[part];
       });
       if (p2 === out && nl === l)
@@ -7173,7 +7173,7 @@ var require_file_type2 = __commonJS((exports, module) => {
   };
 });
 
-// node_modules/is-stream/index.js
+// node_modules/decompress-tar/node_modules/is-stream/index.js
 var require_is_stream = __commonJS((exports, module) => {
   var isStream2 = module.exports = function(stream2) {
     return stream2 !== null && typeof stream2 === "object" && typeof stream2.pipe === "function";
@@ -7643,7 +7643,7 @@ var require_string_decoder = __commonJS((exports) => {
   };
 });
 
-// node_modules/isarray/index.js
+// node_modules/readable-stream/node_modules/isarray/index.js
 var require_isarray = __commonJS((exports, module) => {
   var toString = {}.toString;
   module.exports = Array.isArray || function(arr) {
@@ -11105,6 +11105,25 @@ var require_file_type3 = __commonJS((exports, module) => {
   };
 });
 
+// node_modules/decompress-tarbz2/node_modules/is-stream/index.js
+var require_is_stream2 = __commonJS((exports, module) => {
+  var isStream2 = module.exports = function(stream2) {
+    return stream2 !== null && typeof stream2 === "object" && typeof stream2.pipe === "function";
+  };
+  isStream2.writable = function(stream2) {
+    return isStream2(stream2) && stream2.writable !== false && typeof stream2._write === "function" && typeof stream2._writableState === "object";
+  };
+  isStream2.readable = function(stream2) {
+    return isStream2(stream2) && stream2.readable !== false && typeof stream2._read === "function" && typeof stream2._readableState === "object";
+  };
+  isStream2.duplex = function(stream2) {
+    return isStream2.writable(stream2) && isStream2.readable(stream2);
+  };
+  isStream2.transform = function(stream2) {
+    return isStream2.duplex(stream2) && typeof stream2._transform === "function" && typeof stream2._transformState === "object";
+  };
+});
+
 // node_modules/seek-bzip/lib/bitreader.js
 var require_bitreader = __commonJS((exports, module) => {
   var BITMASK = [0, 1, 3, 7, 15, 31, 63, 127, 255];
@@ -12705,7 +12724,7 @@ var require_unbzip2_stream = __commonJS((exports, module) => {
 var require_decompress_tarbz2 = __commonJS((exports, module) => {
   var decompressTar = require_decompress_tar();
   var fileType = require_file_type3();
-  var isStream2 = require_is_stream();
+  var isStream2 = require_is_stream2();
   var seekBzip = require_lib2();
   var unbzip2Stream = require_unbzip2_stream();
   module.exports = () => (input) => {
@@ -13130,12 +13149,31 @@ var require_file_type4 = __commonJS((exports, module) => {
   };
 });
 
+// node_modules/decompress-targz/node_modules/is-stream/index.js
+var require_is_stream3 = __commonJS((exports, module) => {
+  var isStream2 = module.exports = function(stream2) {
+    return stream2 !== null && typeof stream2 === "object" && typeof stream2.pipe === "function";
+  };
+  isStream2.writable = function(stream2) {
+    return isStream2(stream2) && stream2.writable !== false && typeof stream2._write === "function" && typeof stream2._writableState === "object";
+  };
+  isStream2.readable = function(stream2) {
+    return isStream2(stream2) && stream2.readable !== false && typeof stream2._read === "function" && typeof stream2._readableState === "object";
+  };
+  isStream2.duplex = function(stream2) {
+    return isStream2.writable(stream2) && isStream2.readable(stream2);
+  };
+  isStream2.transform = function(stream2) {
+    return isStream2.duplex(stream2) && typeof stream2._transform === "function" && typeof stream2._transformState === "object";
+  };
+});
+
 // node_modules/decompress-targz/index.js
 var require_decompress_targz = __commonJS((exports, module) => {
   var zlib = import.meta.require("zlib");
   var decompressTar = require_decompress_tar();
   var fileType = require_file_type4();
-  var isStream2 = require_is_stream();
+  var isStream2 = require_is_stream3();
   module.exports = () => (input) => {
     if (!Buffer.isBuffer(input) && !isStream2(input)) {
       return Promise.reject(new TypeError(`Expected a Buffer or Stream, got ${typeof input}`));
@@ -15821,7 +15859,7 @@ var require_filenamify = __commonJS((exports, module) => {
   module.exports = fn;
 });
 
-// node_modules/get-stream/buffer-stream.js
+// node_modules/download/node_modules/get-stream/buffer-stream.js
 var require_buffer_stream2 = __commonJS((exports, module) => {
   var PassThrough = import.meta.require("stream").PassThrough;
   module.exports = (opts) => {
@@ -15863,7 +15901,7 @@ var require_buffer_stream2 = __commonJS((exports, module) => {
   };
 });
 
-// node_modules/get-stream/index.js
+// node_modules/download/node_modules/get-stream/index.js
 var require_get_stream2 = __commonJS((exports, module) => {
   var getStream = function(inputStream, opts) {
     if (!inputStream) {
@@ -16183,7 +16221,7 @@ var require_is_plain_obj = __commonJS((exports, module) => {
   };
 });
 
-// node_modules/sort-keys/index.js
+// node_modules/normalize-url/node_modules/sort-keys/index.js
 var require_sort_keys = __commonJS((exports, module) => {
   var isPlainObj = require_is_plain_obj();
   module.exports = (obj, opts) => {
@@ -16339,6 +16377,90 @@ var require_normalize_url = __commonJS((exports, module) => {
     }
     return str;
   };
+});
+
+// node_modules/cacheable-request/node_modules/get-stream/buffer-stream.js
+var require_buffer_stream3 = __commonJS((exports, module) => {
+  var PassThrough = import.meta.require("stream").PassThrough;
+  module.exports = (opts) => {
+    opts = Object.assign({}, opts);
+    const array = opts.array;
+    let encoding = opts.encoding;
+    const buffer = encoding === "buffer";
+    let objectMode = false;
+    if (array) {
+      objectMode = !(encoding || buffer);
+    } else {
+      encoding = encoding || "utf8";
+    }
+    if (buffer) {
+      encoding = null;
+    }
+    let len = 0;
+    const ret = [];
+    const stream2 = new PassThrough({ objectMode });
+    if (encoding) {
+      stream2.setEncoding(encoding);
+    }
+    stream2.on("data", (chunk) => {
+      ret.push(chunk);
+      if (objectMode) {
+        len = ret.length;
+      } else {
+        len += chunk.length;
+      }
+    });
+    stream2.getBufferedValue = () => {
+      if (array) {
+        return ret;
+      }
+      return buffer ? Buffer.concat(ret, len) : ret.join("");
+    };
+    stream2.getBufferedLength = () => len;
+    return stream2;
+  };
+});
+
+// node_modules/cacheable-request/node_modules/get-stream/index.js
+var require_get_stream3 = __commonJS((exports, module) => {
+  var getStream = function(inputStream, opts) {
+    if (!inputStream) {
+      return Promise.reject(new Error("Expected a stream"));
+    }
+    opts = Object.assign({ maxBuffer: Infinity }, opts);
+    const maxBuffer = opts.maxBuffer;
+    let stream2;
+    let clean;
+    const p = new Promise((resolve2, reject) => {
+      const error2 = (err) => {
+        if (err) {
+          err.bufferedData = stream2.getBufferedValue();
+        }
+        reject(err);
+      };
+      stream2 = bufferStream(opts);
+      inputStream.once("error", error2);
+      inputStream.pipe(stream2);
+      stream2.on("data", () => {
+        if (stream2.getBufferedLength() > maxBuffer) {
+          reject(new Error("maxBuffer exceeded"));
+        }
+      });
+      stream2.once("error", error2);
+      stream2.on("end", resolve2);
+      clean = () => {
+        if (inputStream.unpipe) {
+          inputStream.unpipe(stream2);
+        }
+      };
+    });
+    p.then(clean, clean);
+    return p.then(() => stream2.getBufferedValue());
+  };
+  var bufferStream = require_buffer_stream3();
+  module.exports = getStream;
+  module.exports.buffer = (stream2, opts) => getStream(stream2, Object.assign({}, opts, { encoding: "buffer" }));
+  module.exports.array = (stream2, opts) => getStream(stream2, Object.assign({}, opts, { array: true }));
 });
 
 // node_modules/http-cache-semantics/node4/index.js
@@ -16721,7 +16843,7 @@ var require_node4 = __commonJS((exports, module) => {
   }();
 });
 
-// node_modules/lowercase-keys/index.js
+// node_modules/cacheable-request/node_modules/responselike/node_modules/lowercase-keys/index.js
 var require_lowercase_keys = __commonJS((exports, module) => {
   module.exports = function(obj) {
     var ret = {};
@@ -16733,7 +16855,7 @@ var require_lowercase_keys = __commonJS((exports, module) => {
   };
 });
 
-// node_modules/responselike/src/index.js
+// node_modules/cacheable-request/node_modules/responselike/src/index.js
 var require_src = __commonJS((exports, module) => {
   var Readable = import.meta.require("stream").Readable;
   var lowercaseKeys = require_lowercase_keys();
@@ -16820,7 +16942,7 @@ var require_src2 = __commonJS((exports, module) => {
   module.exports = cloneResponse;
 });
 
-// node_modules/cacheable-request/node_modules/json-buffer/index.js
+// node_modules/cacheable-request/node_modules/keyv/node_modules/json-buffer/index.js
 var require_json_buffer = __commonJS((exports) => {
   exports.stringify = function stringify(o) {
     if (typeof o == "undefined")
@@ -16957,7 +17079,7 @@ var require_src4 = __commonJS((exports, module) => {
   var EventEmitter = import.meta.require("events");
   var urlLib = import.meta.require("url");
   var normalizeUrl = require_normalize_url();
-  var getStream = require_get_stream2();
+  var getStream = require_get_stream3();
   var CachePolicy = require_node4();
   var Response = require_src();
   var lowercaseKeys = require_lowercase_keys2();
@@ -17312,7 +17434,7 @@ var require_into_stream = __commonJS((exports, module) => {
   };
 });
 
-// node_modules/@sindresorhus/is/dist/index.js
+// node_modules/got/node_modules/@sindresorhus/is/dist/index.js
 var require_dist = __commonJS((exports, module) => {
   var is = function(value) {
     if (value === null) {
@@ -17510,6 +17632,90 @@ var require_dist = __commonJS((exports, module) => {
   module.exports.default = is;
 });
 
+// node_modules/got/node_modules/get-stream/buffer-stream.js
+var require_buffer_stream4 = __commonJS((exports, module) => {
+  var PassThrough = import.meta.require("stream").PassThrough;
+  module.exports = (opts) => {
+    opts = Object.assign({}, opts);
+    const array = opts.array;
+    let encoding = opts.encoding;
+    const buffer = encoding === "buffer";
+    let objectMode = false;
+    if (array) {
+      objectMode = !(encoding || buffer);
+    } else {
+      encoding = encoding || "utf8";
+    }
+    if (buffer) {
+      encoding = null;
+    }
+    let len = 0;
+    const ret = [];
+    const stream2 = new PassThrough({ objectMode });
+    if (encoding) {
+      stream2.setEncoding(encoding);
+    }
+    stream2.on("data", (chunk) => {
+      ret.push(chunk);
+      if (objectMode) {
+        len = ret.length;
+      } else {
+        len += chunk.length;
+      }
+    });
+    stream2.getBufferedValue = () => {
+      if (array) {
+        return ret;
+      }
+      return buffer ? Buffer.concat(ret, len) : ret.join("");
+    };
+    stream2.getBufferedLength = () => len;
+    return stream2;
+  };
+});
+
+// node_modules/got/node_modules/get-stream/index.js
+var require_get_stream4 = __commonJS((exports, module) => {
+  var getStream = function(inputStream, opts) {
+    if (!inputStream) {
+      return Promise.reject(new Error("Expected a stream"));
+    }
+    opts = Object.assign({ maxBuffer: Infinity }, opts);
+    const maxBuffer = opts.maxBuffer;
+    let stream2;
+    let clean;
+    const p = new Promise((resolve2, reject) => {
+      const error2 = (err) => {
+        if (err) {
+          err.bufferedData = stream2.getBufferedValue();
+        }
+        reject(err);
+      };
+      stream2 = bufferStream(opts);
+      inputStream.once("error", error2);
+      inputStream.pipe(stream2);
+      stream2.on("data", () => {
+        if (stream2.getBufferedLength() > maxBuffer) {
+          reject(new Error("maxBuffer exceeded"));
+        }
+      });
+      stream2.once("error", error2);
+      stream2.on("end", resolve2);
+      clean = () => {
+        if (inputStream.unpipe) {
+          inputStream.unpipe(stream2);
+        }
+      };
+    });
+    p.then(clean, clean);
+    return p.then(() => stream2.getBufferedValue());
+  };
+  var bufferStream = require_buffer_stream4();
+  module.exports = getStream;
+  module.exports.buffer = (stream2, opts) => getStream(stream2, Object.assign({}, opts, { encoding: "buffer" }));
+  module.exports.array = (stream2, opts) => getStream(stream2, Object.assign({}, opts, { array: true }));
+});
+
 // node_modules/timed-out/index.js
 var require_timed_out = __commonJS((exports, module) => {
   module.exports = function(req, time) {
@@ -17564,6 +17770,18 @@ var require_url_parse_lax = __commonJS((exports, module) => {
     }
     const finalUrl = prependHttp(input, Object.assign({ https: true }, options));
     return url.parse(finalUrl);
+  };
+});
+
+// node_modules/lowercase-keys/index.js
+var require_lowercase_keys3 = __commonJS((exports, module) => {
+  module.exports = function(obj) {
+    var ret = {};
+    var keys = Object.keys(Object(obj));
+    for (var i = 0;i < keys.length; i++) {
+      ret[keys[i].toLowerCase()] = obj[keys[i]];
+    }
+    return ret;
   };
 });
 
@@ -17712,7 +17930,7 @@ var require_p_finally = __commonJS((exports, module) => {
   };
 });
 
-// node_modules/p-timeout/index.js
+// node_modules/got/node_modules/p-timeout/index.js
 var require_p_timeout = __commonJS((exports, module) => {
   var pFinally = require_p_finally();
 
@@ -18377,11 +18595,11 @@ var require_got = __commonJS((exports, module) => {
   var duplexer3 = require_duplexer3();
   var intoStream = require_into_stream();
   var is = require_dist();
-  var getStream = require_get_stream2();
+  var getStream = require_get_stream4();
   var timedOut = require_timed_out();
   var urlParseLax = require_url_parse_lax();
   var urlToOptions = require_url_to_options();
-  var lowercaseKeys = require_lowercase_keys();
+  var lowercaseKeys = require_lowercase_keys3();
   var decompressResponse = (()=>({}));
   var mimicResponse = require_mimic_response();
   var isRetryAllowed = require_is_retry_allowed();
@@ -18434,9 +18652,46 @@ var require_got = __commonJS((exports, module) => {
   module.exports = got;
 });
 
+// node_modules/p-event/node_modules/p-timeout/index.js
+var require_p_timeout2 = __commonJS((exports, module) => {
+  var pFinally = require_p_finally();
+
+  class TimeoutError extends Error {
+    constructor(message) {
+      super(message);
+      this.name = "TimeoutError";
+    }
+  }
+  module.exports = (promise2, ms, fallback) => new Promise((resolve2, reject) => {
+    if (typeof ms !== "number" || ms < 0) {
+      throw new TypeError("Expected `ms` to be a positive number");
+    }
+    const timer = setTimeout(() => {
+      if (typeof fallback === "function") {
+        try {
+          resolve2(fallback());
+        } catch (err2) {
+          reject(err2);
+        }
+        return;
+      }
+      const message = typeof fallback === "string" ? fallback : `Promise timed out after ${ms} milliseconds`;
+      const err = fallback instanceof Error ? fallback : new TimeoutError(message);
+      if (typeof promise2.cancel === "function") {
+        promise2.cancel();
+      }
+      reject(err);
+    }, ms);
+    pFinally(promise2.then(resolve2, reject), () => {
+      clearTimeout(timer);
+    });
+  });
+  module.exports.TimeoutError = TimeoutError;
+});
+
 // node_modules/p-event/index.js
 var require_p_event = __commonJS((exports, module) => {
-  var pTimeout = require_p_timeout();
+  var pTimeout = require_p_timeout2();
   var symbolAsyncIterator = Symbol.asyncIterator || "@@asyncIterator";
   var normalizeEmitter = (emitter) => {
     const addListener = emitter.on || emitter.addListener || emitter.addEventListener;
@@ -30645,7 +30900,7 @@ var require_download_git_repo = __commonJS((exports, module) => {
   module.exports = download;
 });
 
-// src/index.ts
+// index.ts
 import path3 from "path";
 import fs from "fs";
 
@@ -30660,7 +30915,7 @@ var cons = {
 
 // package.json
 var name = "create-hihono";
-var version = "0.2.0";
+var version = "0.2.5";
 
 // src/hooks/dependencies.ts
 import {exec} from "child_process";
@@ -32732,7 +32987,7 @@ var registerInstallationHook = (template, installArg, pmArg) => {
   });
 };
 
-// src/index.ts
+// index.ts
 var import_nanospinner2 = __toESM(require_nanospinner(), 1);
 
 // node_modules/yargs-parser/build/lib/index.js
@@ -33776,7 +34031,7 @@ var esm_default2 = createPrompt((config, done) => {
   ];
 });
 
-// src/index.ts
+// index.ts
 var import_download_git_repo = __toESM(require_download_git_repo(), 1);
 var mkdirp = function(dir) {
   try {
