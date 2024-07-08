@@ -2,16 +2,12 @@
 
 import path from 'path';
 import fs from 'fs';
-import { cons } from './src/constant';
 import { version, name } from './package.json'
+import { konsol, prompt, confirm } from './src/cli';
 import { registerInstallationHook } from './src/hooks/dependencies';
 import { afterCreateHook, projectDependenciesHook } from './src/hook';
 import { createSpinner } from 'nanospinner'
 import yargsParser from 'yargs-parser';
-// @ts-ignore: no types
-import confirm from '@inquirer/confirm'
-// @ts-ignore: no types
-import input from '@inquirer/input'
 // @ts-ignore: no types
 import download from 'download-git-repo';
 
@@ -47,7 +43,7 @@ function mkdirp(dir: string) {
 }
 
 async function main() {
-    console.info(cons.yellow, `${name} version ${version}`)
+    console.info(konsol.yellow(`${name} version ${version}`))
 
     const args = yargsParser(process.argv.slice(2))
 
@@ -57,13 +53,10 @@ async function main() {
     let projectName = ''
     if (args._[0]) {
         target = args._[0].toString()
-        console.log(`${cons.bold, `${'✔'} Using target directory`} … ${target}`)
+        console.log(konsol.bold(`${'✔'} Using target directory … ${konsol.yellow(target)}`))
         projectName = path.basename(target)
     } else {
-        const answer = await input({
-            message: 'Target directory',
-            default: 'hihono-app',
-        })
+        const answer = await prompt('Target directory', 'hihono-app')
         target = answer
         if (answer === '.') {
             projectName = path.basename(process.cwd())
@@ -76,13 +69,10 @@ async function main() {
 
     if (fs.existsSync(target)) {
         if (fs.readdirSync(target).length > 0) {
-            const response = await confirm({
-                message: 'Directory not empty. Continue?',
-                default: false,
-            })
+            const response = await confirm('Directory not empty. Continue?', false)
             // if continue then delete the directory
             if (!response) {
-                console.warn(cons.red, 'Installation cancelled by user')
+                console.warn(konsol.red('Installation cancelled by user'))
                 process.exit()
             }
             fs.rmSync(target, { recursive: true, force: true })
@@ -142,9 +132,9 @@ async function main() {
         fs.writeFileSync(packageJsonPath, JSON.stringify(newPackageJson, null, 2))
     }
 
-    console.log(cons.green, `🎉 Copied project files`)
+    console.log(konsol.green(`🎉 Copied project files`))
     console.log(`\n Get started with:`)
-    console.log(cons.yellow, ` \n cd ${target} && bun dev`)
+    console.log(konsol.yellow(` \n cd ${target} && bun dev`))
 }
 
 main()

@@ -4,6 +4,7 @@
   "description": "CLI tool to create a new hihono project",
   "scripts": {
     "bin": "bun ./bundle.ts",
+    "bundle": " bun build ./index.ts --outfile=bundle.ts",
     "release": "np --yolo"
   },
   "bin": {
@@ -19,16 +20,9 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@hono/eslint-config": "^0.0.2",
-    "@inquirer/confirm": "^3.1.13",
-    "@inquirer/input": "^2.2.0",
     "@types/bun": "latest",
-    "@types/node": "^18.19.39",
     "@types/yargs-parser": "^21.0.3",
-    "chalk": "^5.3.0",
     "download-git-repo": "^3.0.2",
-    "esbuild": "^0.16.17",
-    "eslint": "^8.57.0",
     "execa": "^8.0.1",
     "nanospinner": "^1.1.0",
     "np": "^7.7.0",

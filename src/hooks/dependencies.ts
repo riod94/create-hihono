@@ -1,9 +1,9 @@
 import { exec } from 'child_process'
 import { chdir, exit } from 'process'
 import { projectDependenciesHook } from '../hook'
-import confirm from '@inquirer/confirm'
 import { execa } from 'execa'
 import { createSpinner } from 'nanospinner'
+import { confirm } from '../cli'
 
 // type PackageManager = 'npm' | 'bun' | 'pnpm' | 'yarn'
 
@@ -42,10 +42,7 @@ const registerInstallationHook = (
         if (typeof installArg === 'boolean') {
             installDeps = installArg
         } else {
-            installDeps = await confirm({
-                message: 'Do you want to install project dependencies?',
-                default: true,
-            })
+            installDeps = await confirm('Do you want to install project dependencies?', true)
         }
 
         if (!installDeps) return
