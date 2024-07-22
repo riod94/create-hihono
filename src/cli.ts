@@ -61,7 +61,9 @@ function confirm(question: string, initial?: boolean): Promise<boolean> {
 
     return new Promise<boolean>((resolve) => {
         rl.question(question, (answer) => {
-            const answered = answer === 'y' || answer === 'Y';
+            // Mengganti teks setelah jawaban di input
+            const isYes = answer === 'y' || answer === 'Y' || answer === 'yes' || answer === 'YES' || answer === 'Yes';
+            const answered = initial && !answer ? initial : isYes;
             resolve(answered);
             rl.close();
         });

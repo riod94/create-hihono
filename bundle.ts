@@ -29270,7 +29270,7 @@ import fs from "fs";
 
 // package.json
 var name = "create-hihono";
-var version = "0.2.8-0";
+var version = "0.2.9";
 
 // src/cli.ts
 import * as readline from "readline";
@@ -29308,7 +29308,8 @@ var confirm = function(question, initial) {
   }
   return new Promise((resolve) => {
     rl.question(question, (answer) => {
-      const answered = answer === "y" || answer === "Y";
+      const isYes = answer === "y" || answer === "Y" || answer === "yes" || answer === "YES" || answer === "Yes";
+      const answered = initial && !answer ? initial : isYes;
       resolve(answered);
       rl.close();
     });
